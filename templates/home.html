@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Index</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --paper: #f5f1e7;
+    --paper2: #efe9da;
+    --card: #faf7ef;
+    --ink: #1c1a16;
+    --ink-soft: #4a4640;
+    --muted: #8d8676;
+    --line: rgba(28,26,22,0.13);
+    --line-strong: rgba(28,26,22,0.28);
+    --signal: #c3431f;
+    --signal-soft: rgba(195,67,31,0.1);
+
+    --serif: 'Fraunces', serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+    background-image: radial-gradient(circle at 1px 1px, rgba(28,26,22,0.035) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+
+  ::selection { background: var(--signal); color: var(--paper); }
+
+  :focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+
+  .index-shell { max-width: 640px; width: 100%; }
+
+  .stamp-label {
+    font-family: var(--mono);
+    font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--signal);
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 1.2rem;
+  }
+  .stamp-label::before { content: ''; width: 14px; height: 1px; background: var(--signal); }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(32px, 6vw, 46px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.6rem;
+  }
+
+  .subhead {
+    color: var(--muted);
+    font-size: 14.5px;
+    margin-bottom: 2.6rem;
+    max-width: 440px;
+  }
+
+  .index-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .index-row {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    padding: 1.3rem 0.25rem;
+    border-top: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--ink);
+    transition: padding-left 0.2s, background 0.2s;
+    position: relative;
+  }
+  .index-list .index-row:last-child { border-bottom: 1px solid var(--line); }
+  .index-row:hover { padding-left: 0.75rem; background: var(--card); }
+
+  .index-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    flex-shrink: 0;
+    width: 28px;
+  }
+
+  .index-icon {
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    border: 1px solid var(--line-strong);
+    background: var(--card);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--signal);
+    font-size: 14px;
+    flex-shrink: 0;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .index-row:hover .index-icon { border-color: var(--signal); background: var(--signal-soft); }
+
+  .index-text { flex: 1; min-width: 0; }
+  .index-title {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 19px;
+    margin-bottom: 2px;
+  }
+  .index-meta {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+  .index-meta .pulse-dot {
+    display: inline-block;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #4e8c5c;
+    margin-right: 5px;
+  }
+
+  .index-arrow {
+    font-size: 13px;
+    color: var(--line-strong);
+    transition: color 0.2s, transform 0.2s;
+    flex-shrink: 0;
+  }
+  .index-row:hover .index-arrow { color: var(--signal); transform: translateX(3px); }
+
+  .index-footer {
+    margin-top: 2.2rem;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="index-shell">
+    <p class="stamp-label">Directory — Active Records</p>
+    <h1>Welcome — select a portfolio</h1>
+    <p class="subhead">Two candidate files are on record. Open one to view their full background, skills, and work.</p>
+
+    <div class="index-list">
+      <a class="index-row" href="{% url 'portfolio1' %}">
+        <span class="index-num">01</span>
+        <span class="index-icon"><i class="fa-solid fa-user"></i></span>
+        <span class="index-text">
+          <span class="index-title">Student 1</span>
+          <span class="index-meta"><span class="pulse-dot"></span>Open to work</span>
+        </span>
+        <i class="fa-solid fa-arrow-right index-arrow"></i>
+      </a>
+      <a class="index-row" href="{% url 'portfolio2' %}">
+        <span class="index-num">02</span>
+        <span class="index-icon"><i class="fa-solid fa-user"></i></span>
+        <span class="index-text">
+          <span class="index-title">Student 2</span>
+          <span class="index-meta"><span class="pulse-dot"></span>Open to work</span>
+        </span>
+        <i class="fa-solid fa-arrow-right index-arrow"></i>
+      </a>
+    </div>
+
+    <p class="index-footer">Built with Django</p>
+  </div>
+
+</body>
+</html>
